@@ -37,7 +37,7 @@ services:
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
         gpuConfig:
-          gpuMemorySize: 2048 # 单位MB
+          gpuMemorySize: 1024 # 单位MB
           gpuType: fc.gpu.tesla.1 # fc.gpu.tesla.1 fc.gpu.ampere.1
         cpu: 0.5
         memorySize: 2048 # 单位MB
@@ -114,7 +114,7 @@ services:
         timeout: 7200
         caPort: 8080
         environmentVariables:
-          OLLAMA_BASE_URL=http://127.0.0.1:11434
+          OLLAMA_BASE_URL: http://127.0.0.1:11434
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:1.0"
         cpu: 0.5
