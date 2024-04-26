@@ -40,9 +40,10 @@ services:
           gpuMemorySize: 1024 # 单位MB
           gpuType: fc.gpu.tesla.1 # fc.gpu.tesla.1 fc.gpu.ampere.1
         cpu: 0.5
-        memorySize: 2048 # 单位MB
-        diskSize: 10240 # 单位MB
+        memorySize: 1024 # 单位MB
+        diskSize: 512 # 单位MB
         instanceConcurrency: 200
+        instanceType: g1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、g1（GPU实例）
         autoScaling:  
           minInstances: 0  
           maxInstances: 1  
@@ -161,7 +162,7 @@ services:
               rewriteConfig:
                 wildcardRules:
                   - match: /ollama/api/*
-                    replacement: /$1
+                    replacement: /api/$1
             - path: /*
               serviceName: ollama-webui
               functionName: ollama-webui-api
