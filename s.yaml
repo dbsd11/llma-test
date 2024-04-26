@@ -91,6 +91,7 @@ services:
           OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama"
           HF_ENDPOINT: https://hf-mirror.com/
           TRANSFORMERS_OFFLINE: 1
+          ENABLE_SIGNUP: False
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
         cpu: 2
