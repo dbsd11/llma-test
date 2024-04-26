@@ -36,6 +36,13 @@ services:
         caPort: 11434
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
+        customHealthCheckConfig:
+          httpGetUrl: /
+          timeoutSeconds: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 120
+          successThreshold: 1
         cpu: 0.5
         memorySize: 1024 # 单位MB
         diskSize: 512 # 单位MB
