@@ -36,8 +36,8 @@ services:
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
         cpu: 2
-        memorySize: 1536 # 单位MB
-        diskSize: 1536 # 单位MB
+        memorySize: 2048 # 单位MB
+        diskSize: 10240 # 单位MB
         instanceConcurrency: 200
         autoScaling:  
           minInstances: 0  
