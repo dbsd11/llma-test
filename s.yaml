@@ -36,44 +36,12 @@ services:
         caPort: 11434
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
-        healthCheckConfig:
-          httpGetUrl: /
-          timeoutSeconds: 3
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          failureThreshold: 120
-          successThreshold: 1
-        cpu: 0.5
-        memorySize: 1024 # 单位MB
+        cpu: 8
+        memorySize: 8192 # 单位MB
         diskSize: 512 # 单位MB
         instanceConcurrency: 200
-        instanceType: fc.gpu.tesla.1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU实例）、fc.gpu.ampere.1 GPU实例）
-        gpuMemorySize: 1024 # 单位MB
-        autoScaling:  
-          minInstances: 0  
-          maxInstances: 1  
-          targetConcurrency: 200  # instanceConcurrency * maxInstances
-          rules:  
-            - name: scale-out-cpu  
-              metricType: cpu  
-              metricThreshold: 80  
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: 1
-            - name: scale-in-cpu 
-              metricType: cpu  
-              metricThreshold: 50  
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: -1
-            - name: scale-out-memory 
-              metricType: memory  
-              metricThreshold: 80
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: 1
-            - name: scale-in-memory 
-              metricType: memory  
-              metricThreshold: 50  
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: -1
+        instanceType: c1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU实例）、fc.gpu.ampere.1 GPU实例）
+        # gpuMemorySize: 1024 # 单位MB
         logConfig:
           project: 'serverless-log'
           logstore: 'ollama'
@@ -125,56 +93,10 @@ services:
           TRANSFORMERS_OFFLINE: 1
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
-          healthCheckConfig:
-            httpGetUrl: /
-            timeoutSeconds: 3
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            failureThreshold: 120
-            successThreshold: 1
-        customHealthCheckConfig:
-          httpGetUrl: /
-          timeoutSeconds: 3
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          failureThreshold: 120
-          successThreshold: 1
-        healthCheckConfig:
-          httpGetUrl: /
-          timeoutSeconds: 3
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          failureThreshold: 120
-          successThreshold: 1
         cpu: 2
         memorySize: 2048 # 单位MB
         diskSize: 512 # 单位MB
         instanceConcurrency: 200
-        autoScaling:  
-          minInstances: 0  
-          maxInstances: 1  
-          targetConcurrency: 200  # instanceConcurrency * maxInstances
-          rules:  
-            - name: scale-out-cpu  
-              metricType: cpu  
-              metricThreshold: 80  
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: 1
-            - name: scale-in-cpu 
-              metricType: cpu  
-              metricThreshold: 50  
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: -1
-            - name: scale-out-memory 
-              metricType: memory  
-              metricThreshold: 80
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: 1
-            - name: scale-in-memory 
-              metricType: memory  
-              metricThreshold: 50  
-              adjustmentType: ChangeInCapacity  
-              adjustmentValue: -1
         logConfig:
           project: 'serverless-log'
           logstore: 'ollama-webui'
