@@ -112,9 +112,9 @@ services:
         runtime: custom-container
         timeout: 7200
         caPort: 8080
-        environmentVariables:
-          OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama/api"
-          TRANSFORMERS_OFFLINE: 1
+        # environmentVariables:
+        #   OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama/api"
+        #   TRANSFORMERS_OFFLINE: 1
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
         cpu: 0.5
