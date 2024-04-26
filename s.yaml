@@ -25,14 +25,6 @@ services:
       service: 
         name: "ollama"
         description: 'ollama api server'
-        vpcConfig: auto
-        nasConfig:
-          userId: 0
-          groupId: 0
-          mountPoints:
-            - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
-              nasDir: /ollama
-              fcDir: /root/.ollama
       function:
         name: "ollama-api"
         description: 'ollama api'
