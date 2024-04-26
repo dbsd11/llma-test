@@ -12,8 +12,8 @@ vars:
 
 services:
   ollama: # 业务名称/模块名称
-    component:  fc    # 组件名称，Serverless Devs 工具本身类似于一种游戏机，不具备具体的业务能力，组件类似于游戏卡，用户通过向游戏机中插入不同的游戏卡实现不同的功能，即通过使用不同的组件实现不同的具体业务能力
-    actions:          # 自定义执行逻辑，关于actions 的使用，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#行为描述
+    component:  fc    # 组件名称 https://docs.serverless-devs.com/user-guide/aliyun/fc/yaml/readme/
+    actions:          # 自定义执行逻辑
       pre-deploy:
         - run: set +e && echo "start deploy ${vars.service_domain} on $server.output.url.custom_domain[0].domain}"
           path: "s.yaml"
@@ -36,14 +36,12 @@ services:
         caPort: 11434
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
-        gpuConfig:
-          gpuMemorySize: 1024 # 单位MB
-          gpuType: fc.gpu.tesla.1 # fc.gpu.tesla.1 fc.gpu.ampere.1
         cpu: 0.5
         memorySize: 1024 # 单位MB
         diskSize: 512 # 单位MB
         instanceConcurrency: 200
-        instanceType: g1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、g1（GPU实例）
+        instanceType: fc.gpu.tesla.1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU实例）、fc.gpu.ampere.1 GPU实例）
+        gpuMemorySize: 1024 # 单位MB
         autoScaling:  
           minInstances: 0  
           maxInstances: 1  
