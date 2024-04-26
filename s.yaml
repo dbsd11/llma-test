@@ -120,7 +120,7 @@ services:
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
         cpu: 2
         memorySize: 2048 # 单位MB
-        diskSize: 2048 # 单位MB
+        diskSize: 512 # 单位MB
         instanceConcurrency: 200
         autoScaling:  
           minInstances: 0  
