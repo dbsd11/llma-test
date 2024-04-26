@@ -102,7 +102,7 @@ services:
           groupId: 0
           mountPoints:
             - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
-              nasDir: /ollama-webui
+              nasDir: /open-webui-data
               fcDir: /app/backend/data
       function:
         name: "ollama-webui-api"
@@ -115,10 +115,10 @@ services:
         environmentVariables:
           OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama"
           HF_ENDPOINT: https://hf-mirror.com/
-          # TRANSFORMERS_OFFLINE: 1
+          TRANSFORMERS_OFFLINE: 1
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
-        cpu: 0.5
+        cpu: 2
         memorySize: 512 # 单位MB
         diskSize: 512 # 单位MB
         instanceConcurrency: 200
