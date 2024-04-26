@@ -118,6 +118,13 @@ services:
           TRANSFORMERS_OFFLINE: 1
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
+        customHealthCheckConfig:
+            failureThreshold: 120
+            httpGetUrl: /
+            periodSeconds: 120
+            timeoutSeconds: 3
+            successThreshold: 1
+            initialDelaySeconds: 120
         cpu: 2
         memorySize: 2048 # 单位MB
         diskSize: 512 # 单位MB
