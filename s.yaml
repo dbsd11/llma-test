@@ -35,7 +35,7 @@ services:
         timeout: 7200
         caPort: 11434
         customContainerConfig: 
-          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:1.0-amd"
+          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
         cpu: 2.65
         memorySize: 8192 # 单位MB
         diskSize: 512 # 单位MB
