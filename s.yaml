@@ -36,12 +36,12 @@ services:
         caPort: 11434
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:1.0-amd"
-        cpu: 0.3
-        memorySize: 1344 # 单位MB
+        cpu: 2.65
+        memorySize: 8192 # 单位MB
         diskSize: 512 # 单位MB
         instanceConcurrency: 200
-        instanceType: fc.gpu.ampere.1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU实例）、fc.gpu.ampere.1 GPU实例）
-        gpuMemorySize: 2048 # 单位MB
+        instanceType: fc.gpu.tesla.1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU实例）、fc.gpu.ampere.1 GPU实例）
+        gpuMemorySize: 8192 # 单位MB
         logConfig:
           project: 'serverless-log'
           logstore: 'ollama'
