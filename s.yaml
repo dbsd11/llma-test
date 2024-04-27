@@ -92,6 +92,7 @@ services:
           HF_ENDPOINT: https://hf-mirror.com/
           TRANSFORMERS_OFFLINE: 1
           ENABLE_SIGNUP: False
+          WEBUI_NAME: Bison-ChatBot
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
         cpu: 2
