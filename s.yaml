@@ -26,13 +26,13 @@ services:
         name: "ollama"
         description: 'ollama api server'
         vpcConfig: auto
-        nasConfig:
-          userId: 0
-          groupId: 0
-          mountPoints:
-            - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
-              nasDir: /ollama-models
-              fcDir: /mnt/ollama-models
+        ossMountConfig: 
+          mountPoints: 
+            - bucketName: ollama-test
+              bucketPath: /models
+              endpoint: https://oss-cn-hangzhou.aliyuncs.com
+              mountDir: /mnt/oss/ollama-models
+              readOnly: false
       function:
         name: "ollama-api"
         description: 'ollama api'
@@ -41,6 +41,10 @@ services:
         runtime: custom-container
         timeout: 7200
         caPort: 11434
+        environmentVariables:
+          # OLLAMA_MODELS: /mnt/ollama-models
+          OLLAMA_HOST: 0.0.0.0
+          OLLAMA_ORIGINS: "*" # 多个以,分隔
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:llma3-8b"
         cpu: 2.65
