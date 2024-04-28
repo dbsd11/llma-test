@@ -42,7 +42,7 @@ services:
         timeout: 7200
         caPort: 11434
         environmentVariables:
-          OLLAMA_MODELS: /mnt/ollama-models
+          OLLAMA_MODELS: /mnt/ollama-models/models
           OLLAMA_HOST: 0.0.0.0
           OLLAMA_ORIGINS: "*" # 多个以,分隔
         customContainerConfig: 
