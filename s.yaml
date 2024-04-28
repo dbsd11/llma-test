@@ -30,8 +30,8 @@ services:
           mountPoints: 
             - bucketName: ollama-test
               bucketPath: /models
-              endpoint: https://oss-cn-hangzhou.aliyuncs.com
-              mountDir: /mnt/oss/ollama-models
+              endpoint: https://oss-cn-hangzhou-internal.aliyuncs.com
+              mountDir: /mnt/ollama-models
               readOnly: false
       function:
         name: "ollama-api"
