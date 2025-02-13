@@ -9,6 +9,8 @@ vars:
   region: "cn-hangzhou" 
   service_domain: ${env(service_domain)}
   cert_id: ${env(cert_id)}
+  open_api_key: ${env(open_api_key)}
+  open_api_urls: ${env(open_api_urls)}
 
 services:
   ollama: # 业务名称/模块名称
@@ -99,6 +101,8 @@ services:
         timeout: 7200
         caPort: 8080
         environmentVariables:
+          OPENAI_API_BASE_URLS: ${vars.open_api_urls}
+          OPENAI_API_KEYS: ${vars.open_api_key}
           OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama"
           HF_ENDPOINT: https://hf-mirror.com/
           TRANSFORMERS_OFFLINE: 1
