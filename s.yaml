@@ -90,8 +90,11 @@ services:
           groupId: 0
           mountPoints:
             - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
-              nasDir: /open-webui-data
+              nasDir: /open-webui-data/data
               fcDir: /app/backend/data
+            - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
+              nasDir: /open-webui-data/config
+              fcDir: /root/.ollama
       function:
         name: "ollama-webui-api"
         description: 'ollama webui api'
