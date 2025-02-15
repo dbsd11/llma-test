@@ -176,6 +176,21 @@ services:
               serviceName: ollama-webui
               functionName: ollama-webui-api
               qualifier: LATEST
+        - domainName: open-webui.bdzz.com.cn
+          protocol: HTTP
+          routeConfigs:
+            - path: /ollama/api/*
+              serviceName: ollama
+              functionName: ollama-api
+              qualifier: LATEST
+              rewriteConfig:
+                wildcardRules:
+                  - match: /ollama/api/*
+                    replacement: /api/$1
+            - path: /*
+              serviceName: ollama-webui
+              functionName: ollama-webui-api
+              qualifier: LATEST
       triggers:
         - name: httpTrigger
           type: http
