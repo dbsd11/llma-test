@@ -112,7 +112,7 @@ services:
           ENABLE_SIGNUP: False
           WEBUI_NAME: Bison-ChatBot
         customContainerConfig: 
-          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama-webui:2.0"
+          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/linux_amd64_open-webui:main"
         cpu: 2
         memorySize: 2048 # 单位MB
         diskSize: 512 # 单位MB
