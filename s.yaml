@@ -9,8 +9,6 @@ vars:
   region: "cn-hangzhou" 
   service_domain: ${env(service_domain)}
   cert_id: ${env(cert_id)}
-  open_api_url: ${env(open_api_url)}
-  open_api_key: ${env(open_api_key)}
   webui_secret_key: ${env(webui_secret_key)}
 
 services:
@@ -116,12 +114,10 @@ services:
         timeout: 7200
         caPort: 8080
         environmentVariables:
-          OPENAI_API_BASE_URLS: ${vars.open_api_url}
-          OPENAI_API_KEYS: ${vars.open_api_key}
           OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama"
           HF_ENDPOINT: https://hf-mirror.com/
           TRANSFORMERS_OFFLINE: 1
-          ENABLE_SIGNUP: False
+          ENABLE_SIGNUP: True
           WEBUI_NAME: Bison-ChatBot
           WEBUI_SECRET_KEY: ${vars.webui_secret_key}
           CACHE_CONTROL: 'no-cache'
