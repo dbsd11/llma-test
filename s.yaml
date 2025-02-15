@@ -98,8 +98,15 @@ services:
             - bucketName: ollama-test
               bucketPath: /open-webui-data
               endpoint: https://oss-cn-hangzhou-internal.aliyuncs.com
-              mountDir: /app/backend/data
+              mountDir: /app/backend/data2
               readOnly: false
+        nasConfig:
+          userId: 0
+          groupId: 0
+          mountPoints:
+            - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
+              nasDir: /open-webui-data
+              fcDir: /app/backend/data
       function:
         name: "ollama-webui-api"
         description: 'ollama webui api'
