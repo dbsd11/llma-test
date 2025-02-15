@@ -93,13 +93,13 @@ services:
         name: "ollama-webui"
         description: 'ollama webui server'
         vpcConfig: auto
-        nasConfig:
-          userId: 0
-          groupId: 0
-          mountPoints:
-            - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
-              nasDir: /openwebui-data
-              fcDir: /app/backend/data
+        ossMountConfig: 
+          mountPoints: 
+            - bucketName: ollama-test
+              bucketPath: /open-webui-data
+              endpoint: https://oss-cn-hangzhou-internal.aliyuncs.com
+              mountDir: /app/backend/data
+              readOnly: false
       function:
         name: "ollama-webui-api"
         description: 'ollama webui api'
