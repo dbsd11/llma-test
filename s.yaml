@@ -50,6 +50,13 @@ services:
           OLLAMA_ORIGINS: "*" # 多个以,分隔
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:1.0"
+        customHealthCheckConfig:
+          failureThreshold: 120
+          httpGetUrl: /api/tags
+          periodSeconds: 10
+          timeoutSeconds: 3
+          successThreshold: 1
+          initialDelaySeconds: 10
         cpu: 2.65
         memorySize: 8192 # 单位MB
         diskSize: 512 # 单位MB
@@ -113,10 +120,42 @@ services:
           CACHE_CONTROL: 'max-age=86400'
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/linux_amd64_open-webui:main"
+        customHealthCheckConfig:
+          failureThreshold: 120
+          httpGetUrl: /
+          periodSeconds: 10
+          timeoutSeconds: 3
+          successThreshold: 1
+          initialDelaySeconds: 10
         cpu: 2
         memorySize: 2048 # 单位MB
         diskSize: 512 # 单位MB
         instanceConcurrency: 200
+        autoScaling:  
+          minInstances: 0
+          maxInstances: 2  
+          targetConcurrency: 200  # instanceConcurrency * maxInstances
+          rules:  
+            - name: scale-out-cpu  
+              metricType: cpu  
+              metricThreshold: 80  
+              adjustmentType: ChangeInCapacity  
+              adjustmentValue: 1
+            - name: scale-in-cpu 
+              metricType: cpu  
+              metricThreshold: 50  
+              adjustmentType: ChangeInCapacity  
+              adjustmentValue: -1
+            - name: scale-out-memory 
+              metricType: memory  
+              metricThreshold: 80
+              adjustmentType: ChangeInCapacity  
+              adjustmentValue: 1
+            - name: scale-in-memory 
+              metricType: memory  
+              metricThreshold: 50  
+              adjustmentType: ChangeInCapacity  
+              adjustmentValue: -1
         logConfig:
           project: 'serverless-log'
           logstore: 'ollama-webui'
