@@ -91,13 +91,6 @@ services:
         name: "ollama-webui"
         description: 'ollama webui server'
         vpcConfig: auto
-        ossMountConfig: 
-          mountPoints: 
-            - bucketName: ollama-test
-              bucketPath: /open-webui-data
-              endpoint: https://oss-cn-hangzhou-internal.aliyuncs.com
-              mountDir: /app/backend/data2
-              readOnly: false
         nasConfig:
           userId: 0
           groupId: 0
