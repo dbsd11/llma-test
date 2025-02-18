@@ -110,8 +110,9 @@ services:
           OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama"
           HF_ENDPOINT: https://hf-mirror.com/
           TRANSFORMERS_OFFLINE: 1
-          ENABLE_SIGNUP: False
+          ENABLE_SIGNUP: True
           ENABLE_WEBSOCKET_SUPPORT: True
+          ENABLE_RAG_WEB_SEARCH: True
           WEBUI_NAME: Bison-ChatBot
           WEBUI_SECRET_KEY: ${vars.webui_secret_key}
           CACHE_CONTROL: 'max-age=60'
