@@ -9,74 +9,9 @@ vars:
   region: "cn-hangzhou" 
   service_domain: ${env(service_domain)}
   cert_id: ${env(cert_id)}
-  webui_secret_key: ${env(webui_secret_key)}
 
 services:
-  ollama: # 业务名称/模块名称
-    component:  fc    # 组件名称 https://docs.serverless-devs.com/user-guide/aliyun/fc/yaml/readme/
-    actions:          # 自定义执行逻辑
-      pre-deploy:
-        - run: set +e && echo "start deploy ${vars.service_domain} on $server.output.url.custom_domain[0].domain}"
-          path: "s.yaml"
-      post-deploy:  # 在deploy之后运行
-        - run: set +e && echo 'deploy success'
-          path: "s.yaml"
-    props: # 组件的属性值
-      region: ${vars.region}
-      service: 
-        name: "ollama"
-        description: 'ollama api server'
-        vpcConfig: auto
-        ossMountConfig: 
-          mountPoints: 
-            - bucketName: ollama-test
-              bucketPath: /models
-              endpoint: https://oss-cn-hangzhou-internal.aliyuncs.com
-              mountDir: /mnt/ollama-models
-              readOnly: false
-      function:
-        name: "ollama-api"
-        description: 'ollama api'
-        version: 'LATEST'
-        codeUri: '.'
-        runtime: custom-container
-        timeout: 7200
-        caPort: 11434
-        environmentVariables:
-          OLLAMA_MODELS: /mnt/ollama-models/models
-          OLLAMA_HOST: 0.0.0.0
-          OLLAMA_ORIGINS: "*" # 多个以,分隔
-        customContainerConfig: 
-          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:1.0"
-        customHealthCheckConfig:
-          failureThreshold: 120
-          httpGetUrl: /api/tags
-          periodSeconds: 10
-          timeoutSeconds: 3
-          successThreshold: 1
-          initialDelaySeconds: 10
-        cpu: 2.65
-        memorySize: 8192 # 单位MB
-        diskSize: 512 # 单位MB
-        instanceConcurrency: 200
-        instanceType: fc.gpu.tesla.1 # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU实例）、fc.gpu.ampere.1 GPU实例）
-        gpuMemorySize: 8192 # 单位MB
-        logConfig:
-          project: 'serverless-log'
-          logstore: 'ollama'
-      triggers:
-        - name: httpTrigger
-          type: http
-          config:
-            authType: anonymous
-            methods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - HEAD
-              - OPTIONS
-  ollama-webui: # 业务名称/模块名称
+  chatgpt-on-wechat: # 业务名称/模块名称
     component:  fc    # 组件名称，Serverless Devs 工具本身类似于一种游戏机，不具备具体的业务能力，组件类似于游戏卡，用户通过向游戏机中插入不同的游戏卡实现不同的功能，即通过使用不同的组件实现不同的具体业务能力
     actions:          # 自定义执行逻辑，关于actions 的使用，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#行为描述
       pre-deploy:
@@ -88,36 +23,32 @@ services:
     props: # 组件的属性值
       region: ${vars.region}
       service: 
-        name: "ollama-webui"
-        description: 'ollama webui server'
+        name: "chatgpt-on-wechat"
+        description: 'chatgpt on wechat'
         vpcConfig: auto
         nasConfig:
           userId: 0
           groupId: 0
           mountPoints:
             - serverAddr: 03808482b2-nwn30.cn-hangzhou.nas.aliyuncs.com
-              nasDir: /open-webui-data
-              fcDir: /app/backend/data
+              nasDir: /chatgpt-on-wechat/plugins
+              fcDir: /app/plugins
       function:
-        name: "ollama-webui-api"
-        description: 'ollama webui api'
+        name: "chatgpt-on-wechat-api"
+        description: 'chatgpt on wechat api'
         version: 'LATEST'
         codeUri: '.'
         runtime: custom-container
         timeout: 7200
         caPort: 8080
         environmentVariables:
-          OLLAMA_BASE_URL: "https://${vars.service_domain}/ollama"
-          HF_ENDPOINT: https://hf-mirror.com/
-          TRANSFORMERS_OFFLINE: 1
-          ENABLE_SIGNUP: True
-          ENABLE_WEBSOCKET_SUPPORT: True
-          ENABLE_RAG_WEB_SEARCH: True
-          WEBUI_NAME: Bison-ChatBot
-          WEBUI_SECRET_KEY: ${vars.webui_secret_key}
-          CACHE_CONTROL: 'max-age=60'
+          TZ: 'Asia/Shanghai'
+          USE_GLOBAL_PLUGIN_CONFIG: 'True'
+          USE_LINKAI: 'False'
+          LINKAI_API_KEY: ''
+          LINKAI_APP_CODE: ''
         customContainerConfig: 
-          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/linux_amd64_open-webui:main"
+          image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/chatgpt-on-wechat:latest"
         customHealthCheckConfig:
           failureThreshold: 120
           httpGetUrl: /
@@ -156,23 +87,15 @@ services:
               adjustmentValue: -1
         logConfig:
           project: 'serverless-log'
-          logstore: 'ollama-webui'
+          logstore: 'default'
       customDomains:
         - domainName: ${vars.service_domain}
           protocol: HTTP,HTTPS
           certId: ${vars.cert_id}
           routeConfigs:
-            # - path: /ollama/api/*
-            #   serviceName: ollama
-            #   functionName: ollama-api
-            #   qualifier: LATEST
-            #   rewriteConfig:
-            #     wildcardRules:
-            #       - match: /ollama/api/*
-            #         replacement: /api/$1
             - path: /*
-              serviceName: ollama-webui
-              functionName: ollama-webui-api
+              serviceName: chatgpt-on-wechat
+              functionName: chatgpt-on-wechat-api
               qualifier: LATEST
       triggers:
         - name: httpTrigger
