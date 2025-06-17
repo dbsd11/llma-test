@@ -162,14 +162,14 @@ services:
           protocol: HTTP,HTTPS
           certId: ${vars.cert_id}
           routeConfigs:
-            # - path: /ollama/api/*
-            #   serviceName: ollama
-            #   functionName: ollama-api
-            #   qualifier: LATEST
-            #   rewriteConfig:
-            #     wildcardRules:
-            #       - match: /ollama/api/*
-            #         replacement: /api/$1
+            - path: /ollama/api/*
+              serviceName: ollama
+              functionName: ollama-api
+              qualifier: LATEST
+              rewriteConfig:
+                wildcardRules:
+                  - match: /ollama/api/*
+                    replacement: /api/$1
             - path: /*
               serviceName: ollama-webui
               functionName: ollama-webui-api
