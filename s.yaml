@@ -46,6 +46,7 @@ services:
           OLLAMA_MODELS: /mnt/ollama-models/models
           OLLAMA_HOST: 0.0.0.0
           OLLAMA_ORIGINS: "*" # 多个以,分隔
+          HF_ENDPOINT: https://hf-mirror.com/
         customContainerConfig: 
           image: "registry.cn-hangzhou.aliyuncs.com/dbsnolimit/ollama:1.0"
         customHealthCheckConfig:
